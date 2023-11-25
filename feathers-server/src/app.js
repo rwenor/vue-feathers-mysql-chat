@@ -13,6 +13,9 @@ import { authentication } from './authentication.js'
 import { services } from './services/index.js'
 import { channels } from './channels.js'
 
+// Added
+import { logRuntime } from './hooks/log-runtime.js'
+
 const app = koa(feathers())
 
 // Load our app configuration (see config/ folder)
@@ -44,7 +47,7 @@ app.configure(channels)
 // Register hooks that run on all service methods
 app.hooks({
   around: {
-    all: [logError]
+    all: [logError, logRuntime]
   },
   before: {},
   after: {},

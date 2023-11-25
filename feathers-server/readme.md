@@ -27,6 +27,8 @@ This project uses [Feathers](http://feathersjs.com). An open source framework fo
 
 Run `npm test` and all your tests in the `test/` directory will be run.
 
+npm run testw -- Watches files
+
 ## Scaffolding
 
 This app comes with a powerful command line interface for Feathers. Here are a few things it can do:
