@@ -8,4 +8,14 @@ describe('messages service', () => {
 
     assert.ok(service, 'Registered the service')
   })
+
+  xit('registered the service2x', () => {
+    const service = app.service('messages')
+
+    assert.ok(service, 'Registered the service')
+    service.create({
+      text: 'A message from a REST client'
+    })
+
+  })
 })
