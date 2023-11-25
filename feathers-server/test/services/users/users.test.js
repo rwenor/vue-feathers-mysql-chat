@@ -8,4 +8,17 @@ describe('users service', () => {
 
     assert.ok(service, 'Registered the service')
   })
+
+  it('finds all users', async () => {
+    const users = await app.service('users').find({
+      paginate: false
+    })
+
+    // console.log(`users:`)
+    // console.log(JSON.stringify(users, null, 2))
+
+    assert.ok(Array.isArray(users))
+    console.log('    User cnt: '+ users.length)
+
+  })
 })
