@@ -41,3 +41,11 @@ $ npx feathers generate service               # Generate a new Service
 ## Help
 
 For more information on all the things you can do with Feathers visit [docs.feathersjs.com](http://docs.feathersjs.com).
+
+###
+CORS: 
+in server->default.json add:
+  "origins": [
+    "http://localhost:3030",
+    "http://localhost:5173"
+  ],

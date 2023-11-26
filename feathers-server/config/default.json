@@ -2,8 +2,10 @@
   "host": "localhost",
   "port": 3030,
   "public": "./public/",
+  "public_vueapp": "../vue3client/dist",
   "origins": [
-    "http://localhost:3030"
+    "http://localhost:3030",
+    "http://localhost:5173"
   ],
   "paginate": {
     "default": 10,

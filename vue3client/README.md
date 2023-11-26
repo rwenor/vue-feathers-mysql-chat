@@ -36,6 +36,13 @@ npm run test:unit
 
 
 ###
+CORS: 
+in server->default.json add:
+  "origins": [
+    "http://localhost:3030",
+    "http://localhost:5173"
+  ],
+
 
 On server: 
     npm run bundle:client
