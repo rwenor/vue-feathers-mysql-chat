@@ -1,15 +1,28 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+import {useFhApiStore} from './stores/FhApiStore'
+
+let fhApiStore = useFhApiStore()
+fhApiStore.login('hello@feathersjs.com', 'supersecret')
+// debugger
 </script>
 
 <template>
   <header>
+
+    <hello-world msg="You did it!"/>
+
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      {{fhApiStore.test}} 
+      <br>
+      {{fhApiStore.user}} u
 
+      <button @click="fhApiStore.setUser()">LoginX</button>
+      <button @click="fhApiStore.login('hello@feathersjs.com', 'supersecret')">Login</button>
+      
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>

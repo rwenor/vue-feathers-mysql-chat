@@ -17,8 +17,8 @@ describe('users service', () => {
     // console.log(`users:`)
     // console.log(JSON.stringify(users, null, 2))
 
+    console.info('    User cnt: '+ users.length)
     assert.ok(Array.isArray(users))
-    console.log('    User cnt: '+ users.length)
 
   })
 })

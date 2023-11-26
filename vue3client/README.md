@@ -33,3 +33,16 @@ npm run build
 ```sh
 npm run test:unit
 ```
+
+
+###
+
+On server: 
+    npm run bundle:client
+    npm link
+
+On Client:
+  //npm link feathers-server  // Virker ikke????, 
+  npm install http:/localhost:3030/feathers-server-0.0.0.tgz
+
+  
