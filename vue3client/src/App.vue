@@ -1,10 +1,25 @@
 <script setup>
+import { ref } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import {useFhApiStore} from './stores/FhApiStore'
 
 let fhApiStore = useFhApiStore()
 fhApiStore.login('hello@feathersjs.com', 'supersecret')
+fhApiStore.getUsers()
+fhApiStore.getMessages()
+fhApiStore.createMessage('User logdin: '+ fhApiStore.user)
+
+
+const newMsg = ref('Test')
+
+const addNewMsg = () => {
+  //debugger
+  console.log(newMsg.value)
+  fhApiStore.createMessage(newMsg.value)
+  newMsg.value = ''
+}
+
 // debugger
 </script>
 
@@ -18,11 +33,39 @@ fhApiStore.login('hello@feathersjs.com', 'supersecret')
     <div class="wrapper">
       {{fhApiStore.test}} 
       <br>
-      {{fhApiStore.user}} u
+      {{fhApiStore.user}}
 
-      <button @click="fhApiStore.setUser()">LoginX</button>
-      <button @click="fhApiStore.login('hello@feathersjs.com', 'supersecret')">Login</button>
+
+      <button @click="fhApiStore.getMessages()">getMessages</button>
       
+      <button @click="fhApiStore.getUsers()">getUsers</button>
+      
+
+      <button @click="fhApiStore.login('hello@feathersjs.com', 'supersecret'); ">Login</button>
+      <button @click="fhApiStore.setUser()">setUser</button>
+      
+      <!-- {{fhApiStore.users}} -->
+      <table>
+        <tr><th>email</th></tr>
+        <tr v-for="user in fhApiStore.users">
+          <td>{{user.email}}</td>
+        </tr>
+      </table>
+YYY
+        <table>
+          <tr><th>email</th><th>msg</th><th></th>func.</tr>
+          <tr v-for="message in fhApiStore.messages" :key="message.id">
+            <td>{{message.user.email}}</td>
+            <td>{{message.text}}</td>
+            <td>
+              <button @click="fhApiStore.deleteMessage(message.id)"> - </button>
+            </td>
+          </tr>
+        </table> 
+        <!-- {{newMsg}} -->
+        <input type="text" 
+          v-model="newMsg" 
+          v-on:keyup.enter="addNewMsg">
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>

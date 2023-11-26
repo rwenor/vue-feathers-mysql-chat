@@ -8,9 +8,9 @@ defineProps({
   }
 })
 
-const store = useCounterStore()
-// call the action as a method of the store
-store.randomizeCounter()
+const cntStore = useCounterStore()
+// call the action as a method of the Store
+cntStore.randomizeCounter()
 
 </script>
 
@@ -18,9 +18,9 @@ store.randomizeCounter()
   <div class="greetings">
     <h1 class="green">{{ msg }}</h1>
     <h3>
-      You’ve successfully created a project with XYZ {{store.count}}
+      You’ve successfully created a project with XYZ {{cntStore.count}}
       <br>
-      <button @click="store.randomizeCounter()">Randomize</button>
+      <button @click="cntStore.randomizeCounter()">Randomize</button>
       
     </h3>
   </div>

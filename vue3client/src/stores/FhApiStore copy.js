@@ -82,20 +82,9 @@ export const useFhApiStore = defineStore('FhApiStore', {
     async deleteMessage (id) {
       try {
         //debugger
-        let message = await messagesService.remove(id)
-        jLog(message, 'delete message:')
-        await this.getMessages()
-      } catch (err) {
-        cLog(err)
-      }
-    },
-
-    async createMessage (text) {
-      try {
-        //debugger
-        let message = await messagesService.create({text})
-        jLog(message, 'create message:')
-        await this.getMessages()
+        let messages = await messagesService.remove(id)
+        this.messages = messages.data
+        jLog(messages, 'delete message:')
       } catch (err) {
         cLog(err)
       }
