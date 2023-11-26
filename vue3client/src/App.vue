@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted  } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import {useFhApiStore} from './stores/FhApiStore'
@@ -18,6 +18,21 @@ const addNewMsg = () => {
   console.log(newMsg.value)
   fhApiStore.createMessage(newMsg.value)
   newMsg.value = ''
+}
+
+
+const newMsgDomRef = ref(null)  // refrens input in dome
+
+onMounted(() => {
+  debugger
+  newMsgDomRef.value.focus()
+})
+
+const addnewMsgDomRef = () => {
+  debugger
+  console.log(newMsgDomRef.value.value)
+  fhApiStore.createMessage(newMsgDomRef.value.value)
+  newMsgDomRef.value.value = ''
 }
 
 // debugger
@@ -63,9 +78,18 @@ YYY
           </tr>
         </table> 
         <!-- {{newMsg}} -->
+
+        <br>
+        <h3>v-modal</h3>
         <input type="text" 
           v-model="newMsg" 
           v-on:keyup.enter="addNewMsg">
+
+        <br>
+        <h3>By ref</h3>
+        <input type="text" 
+          ref="newMsgDomRef"
+          v-on:keyup.enter="addnewMsgDomRef">
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
