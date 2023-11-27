@@ -10,6 +10,8 @@ services:
       MARIADB_ROOT_PASSWORD: ax
     ports:
       - 3306:3306
+    volumes:
+      - ./server-db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
 
   adminer:
     image: adminer
