@@ -3,6 +3,7 @@ import { ref, onMounted  } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import {useFhApiStore} from './stores/FhApiStore'
+import Modal from './components/Modal.vue'
 
 let fhApiStore = useFhApiStore()
 fhApiStore.login('hello@feathersjs.com', 'supersecret')
@@ -98,6 +99,8 @@ YYY
   </header>
 
   <RouterView />
+
+  <!-- <Modal/> -->
 </template>
 
 <style scoped>
