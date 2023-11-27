@@ -36,7 +36,8 @@ Ex: 18 or 18.1 or 18.3.1 and ensure the specified version is installed on your m
   add-zsh-hook chpwd nvm_auto_use
   nvm_auto_use
 ```
+
 ### to apply:
 ### https://unix.stackexchange.com/questions/532548/how-do-i-apply-the-changes-to-the-zshrc-file-after-editing-it
- exec zsh
+```sh exec zsh ```
 
