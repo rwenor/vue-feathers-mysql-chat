@@ -13,6 +13,7 @@ Feathers-server directory
 
 Vue3-client
 * npm i
+* npm install http:/localhost:3030/feathers-server-0.0.0.tgz --save
 
 
 
