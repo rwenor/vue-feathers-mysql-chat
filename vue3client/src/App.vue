@@ -6,16 +6,12 @@ import {useFhApiStore} from './stores/FhApiStore'
 import Modal from './components/Modal.vue'
 
 let fhApiStore = useFhApiStore()
-fhApiStore.login('hello@feathersjs.com', 'supersecret')
-fhApiStore.getUsers()
-fhApiStore.getMessages()
-fhApiStore.createMessage('User logdin: '+ fhApiStore.user)
 
 
 const newMsg = ref('Test')
 
 const addNewMsg = () => {
-  //debugger
+  //xdebugger
   console.log(newMsg.value)
   fhApiStore.createMessage(newMsg.value)
   newMsg.value = ''
@@ -25,18 +21,34 @@ const addNewMsg = () => {
 const newMsgDomRef = ref(null)  // refrens input in dome
 
 onMounted(() => {
-  debugger
+  //xdebugger
   newMsgDomRef.value.focus()
 })
 
 const addnewMsgDomRef = () => {
-  debugger
+  //xdebugger
   console.log(newMsgDomRef.value.value)
   fhApiStore.createMessage(newMsgDomRef.value.value)
   newMsgDomRef.value.value = ''
 }
 
-// debugger
+const loginOrCreateUser = async () => {
+  //xdebugger
+  let aUser = await fhApiStore.login('hello@feathersjs.com', 'supersecret')
+
+  if (!aUser) {
+    await fhApiStore.createUser('hello@feathersjs.com', 'supersecret')
+    aUser = await fhApiStore.login('hello@feathersjs.com', 'supersecret')
+  }
+
+  fhApiStore.getUsers()
+  fhApiStore.getMessages()
+  fhApiStore.createMessage('User logdin: '+ fhApiStore.user)
+}
+
+// Auto login
+loginOrCreateUser()
+// //xdebugger
 </script>
 
 <template>

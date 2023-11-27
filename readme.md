@@ -1,3 +1,19 @@
+# Setup system
+
+1. nvm use 20
+
+
+Feathers-server directory
+* docker-compose up (docker must be installed)
+* npm i 
+* npm run bundle:client
+* npm link
+* npm run migrate
+* npm run dev
+
+Vue3-client
+* npm i
+
 
 
 
