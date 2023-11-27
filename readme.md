@@ -12,6 +12,7 @@ create a .nvmrc file in the desired directory and add your required <node versio
 Ex: 18 or 18.1 or 18.3.1 and ensure the specified version is installed on your machine. If 18 is mentioned, any installed version with a major as 18 will be picked.
 
 ### Add below lines to your .zshrc
+```sh
   export NVM_DIR="$HOME/.nvm"
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
@@ -34,8 +35,8 @@ Ex: 18 or 18.1 or 18.3.1 and ensure the specified version is installed on your m
   }
   add-zsh-hook chpwd nvm_auto_use
   nvm_auto_use
-
+```
 ### to apply:
 ### https://unix.stackexchange.com/questions/532548/how-do-i-apply-the-changes-to-the-zshrc-file-after-editing-it
-  exec zsh
+ exec zsh
 
