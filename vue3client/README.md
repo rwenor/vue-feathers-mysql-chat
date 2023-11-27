@@ -50,6 +50,6 @@ On server:
 
 On Client:
   //npm link feathers-server  // Virker ikke????, 
-  npm install http:/localhost:3030/feathers-server-0.0.0.tgz
+  npm install http:/localhost:3030/feathers-server-0.0.0.tgz --save
 
   

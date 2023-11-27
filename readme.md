@@ -8,7 +8,15 @@ Må bruke zsh...
 
 ## Solution here 
 ## https://stackoverflow.com/questions/60051990/set-node-version-differently-for-specific-projectfolder-via-nvm
+
+
 create a .nvmrc file in the desired directory and add your required <node version>
+```sh
+nvm use 20.10.0
+node -v > .nvmrc
+```
+
+
 Ex: 18 or 18.1 or 18.3.1 and ensure the specified version is installed on your machine. If 18 is mentioned, any installed version with a major as 18 will be picked.
 
 ### Add below lines to your .zshrc
