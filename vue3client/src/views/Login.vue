@@ -1,6 +1,6 @@
 <script setup>
 import {useFhApiStore} from '../stores/FhApiStore'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import Spinner from '../utils/Spinner.vue'
 import router from '../router/index.js'
 
@@ -10,22 +10,24 @@ let email = ref('');
 let password = ref('');
 let loadingSpinner = ref(false);
 
-
+onMounted(async () => {
+  let res = await fhApiStore.login();
+  if(res.user?.id) router.push('./')
+})
 
 const login = async () => {
   error = "";
   loadingSpinner.value = true;
 
   await fhApiStore.login(email.value, password.value)
-    .then(user => {
+    .then(res => {
       loadingSpinner.value = false;
-
-      if (!user.id) {
-        error = user;
-        return error;
+      if (res.user?.id) {
+        router.push('./');
+        return res;
       } else {
-        router.push('/');
-        return user;
+        error = res;
+        return error;
       }
     }
     );
