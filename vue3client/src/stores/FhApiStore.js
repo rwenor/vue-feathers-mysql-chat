@@ -36,23 +36,28 @@ export const useFhApiStore = defineStore('FhApiStore', {
     setUser () {
     },
 
-    async login (email, password) {
+    async login(email, password) {
+      let res = {};
       try {
-        // Authenticate with the local email/password strategy
-        //debugger
-        let { user } = await fhClient.authenticate({
-          strategy: 'local',
-          email,
-          password
-        })
-        console.log('User loggedin: ', user)
-        return user;
-        // Show e.g. logged in dashboard page
+        if (!email || !password) {
+          res = await fhClient.reAuthenticate()
+        } else {
+          res = await fhClient.authenticate({
+            strategy: 'local',
+            email,
+            password
+          })
+        }
+        console.log('User loggedin: ', res)
+        return res;
       } catch (err) {
-        // Show login page (potentially with `e.message`)
         console.error('Authentication error', err.message)
         return err.message;
       }
+    },
+
+    async logout(){
+      await fhClient.logout();
     },
     
     async createUser (email, password) {
