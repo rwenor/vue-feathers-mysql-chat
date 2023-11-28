@@ -34,8 +34,6 @@ export const useFhApiStore = defineStore('FhApiStore', {
 
   actions: {
     setUser () {
-      debugger
-      this.user = 'Rolf'
     },
 
     async login (email, password) {
@@ -47,14 +45,13 @@ export const useFhApiStore = defineStore('FhApiStore', {
           email,
           password
         })
-        console.log('User loggedin: ')
-        console.log(JSON.stringify(user, null, 2))
-        this.user = user.email
+        console.log('User loggedin: ', user)
         return user;
         // Show e.g. logged in dashboard page
       } catch (err) {
         // Show login page (potentially with `e.message`)
-        console.error('Authentication error', err)
+        console.error('Authentication error', err.message)
+        return err.message;
       }
     },
     
