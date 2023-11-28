@@ -38,6 +38,7 @@ export const useFhApiStore = defineStore('FhApiStore', {
 
     async login(email, password) {
       let res = {};
+      this.user = ''; 
       try {
         if (!email || !password) {
           res = await fhClient.reAuthenticate()
@@ -49,6 +50,7 @@ export const useFhApiStore = defineStore('FhApiStore', {
           })
         }
         console.log('User loggedin: ', res)
+        this.user = res.user;
         return res;
       } catch (err) {
         console.error('Authentication error', err.message)
