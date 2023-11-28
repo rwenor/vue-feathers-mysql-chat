@@ -1,180 +1,115 @@
 <script setup>
-import { ref, onMounted  } from 'vue'
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { ref, onMounted, watch } from 'vue'
 import {useFhApiStore} from './stores/FhApiStore'
-import Modal from './components/Modal.vue'
+import router from './router/index.js'
 
-let fhApiStore = useFhApiStore()
+let fhApiStore = useFhApiStore();
 
-
-const newMsg = ref('Test')
-
-const addNewMsg = () => {
-  //xdebugger
-  console.log(newMsg.value)
-  fhApiStore.createMessage(newMsg.value)
-  newMsg.value = ''
+const handleLogout = async () => {
+  await fhApiStore.logout().then(() => router.push('./login')
+    )
 }
 
-
-const newMsgDomRef = ref(null)  // refrens input in dome
-
-onMounted(() => {
-  //xdebugger
-  newMsgDomRef.value.focus()
-})
-
-const addnewMsgDomRef = () => {
-  //xdebugger
-  console.log(newMsgDomRef.value.value)
-  fhApiStore.createMessage(newMsgDomRef.value.value)
-  newMsgDomRef.value.value = ''
-}
-
-const loginOrCreateUser = async () => {
-  //xdebugger
-  let aUser = await fhApiStore.login('hello@feathersjs.com', 'supersecret')
-
-  if (!aUser) {
-    await fhApiStore.createUser('hello@feathersjs.com', 'supersecret')
-    aUser = await fhApiStore.login('hello@feathersjs.com', 'supersecret')
-  }
-
-  fhApiStore.getUsers()
-  fhApiStore.getMessages()
-  fhApiStore.createMessage('User logdin: '+ fhApiStore.user)
-}
-
-// Auto login
-loginOrCreateUser()
-// //xdebugger
 </script>
 
 <template>
-  <header>
+  <div id="app">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-gradient px-0 py-0">
+      <div class="container-fluid">
+        <!-- Logo -->
+        <router-link to="/" class="navbar-brand" href="#">
+          <img class="logo" src="./assets/Axicon-logo-light.png" alt="Logo Axicon">
+        </router-link>
+        <!-- Navbar toggle -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+          aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <!-- Nav -->
+          <div class="navbar-nav mx-lg-auto">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" v-if="fhApiStore.user">
+              <li class="nav-item">
+                <router-link class="nav-link" to="/">Mamut </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link class="nav-link" to="/rackbeat">RackBeat </router-link>
+              </li>
+              <li class="nav-item" v-if="fhApiStore.user.accessLevelId === 1">
+                <router-link class="nav-link" to="/deler/4">Delerplan</router-link>
+              </li>
+              <li class="nav-item" v-if="fhApiStore.user.accessLevelId === 1">
+                <router-link class="nav-link" to="/deler/6">Produktoversikt</router-link>
+              </li>
 
-    <hello-world msg="You did it!"/>
+              <li class="nav-item" v-if="fhApiStore.user.accessLevelId === 1">
+                <router-link class="nav-link" to="/gqlfilter">GqlFilter</router-link>
+              </li>
 
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+              <li class="nav-item">
+                <router-link class="nav-link" to="/systemlist">System list</router-link>
+              </li>
+              <li class="nav-item" v-if="fhApiStore.user.accessLevelId === 1">
+                <router-link class="nav-link" to="/adminpage">Admin</router-link>
+              </li>
+            </ul>
+          </div>
+          <!-- Right navigation -->
+          <ul class="d-flex navbar-nav">
+            <li class="nav-item" v-if="fhApiStore.user">
+              <!-- <SearchConfig /> -->
+            </li>
+            <div class="dropdown-divider mt-4 mb-3"></div>
+            <li id="loginUser" class="text-light px-3 py-2 nav-item" v-if="fhApiStore.user">
+              <router-link class="nav-link user-link" :to="`/userpage/${fhApiStore.user.id}`" title="Bruker detaljer">
+                <i class="far fa-user"></i>
+                {{fhApiStore.user.email }}
+              </router-link>
 
-    <div class="wrapper">
-      {{fhApiStore.test}} 
-      <br>
-      {{fhApiStore.user}}
+              <a class="ms-1 link-danger" @click.prevent="handleLogout" href="#" title="Log ut">
+                Logout
+                <i class="fas fa-sign-out-alt fa-lg"></i>
+              </a>
+            </li>
+            <li class="nav-item" v-else>
+              <router-link class="nav-link text-primary" title="Logg inn i Axicon" to="/login">
+                Logg inn
+                <i class="fas fa-sign-out-alt fa-lg"></i>
+              </router-link>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <router-view />
+    <footer>
+      <!-- TODO Better footer -->
+      <!-- <p class="foot">&copy; Copyright 2019 Axicon AS</p> -->
+     "fhApiStore" {{ fhApiStore }}
+    </footer>
+  </div>
 
-
-      <button @click="fhApiStore.getMessages()">getMessages</button>
-      
-      <button @click="fhApiStore.getUsers()">getUsers</button>
-      
-
-      <button @click="fhApiStore.login('hello@feathersjs.com', 'supersecret'); ">Login</button>
-      <button @click="fhApiStore.setUser()">setUser</button>
-      
-      <!-- {{fhApiStore.users}} -->
-      <table>
-        <tr><th>email</th></tr>
-        <tr v-for="user in fhApiStore.users">
-          <td>{{user.email}}</td>
-        </tr>
-      </table>
-YYY
-        <table>
-          <tr><th>email</th><th>msg</th><th></th>func.</tr>
-          <tr v-for="message in fhApiStore.messages" :key="message.id">
-            <td>{{message.user.email}}</td>
-            <td>{{message.text}}</td>
-            <td>
-              <button @click="fhApiStore.deleteMessage(message.id)"> - </button>
-            </td>
-          </tr>
-        </table> 
-        <!-- {{newMsg}} -->
-
-        <br>
-        <h3>v-modal</h3>
-        <input type="text" 
-          v-model="newMsg" 
-          v-on:keyup.enter="addNewMsg">
-
-        <br>
-        <h3>By ref</h3>
-        <input type="text" 
-          ref="newMsgDomRef"
-          v-on:keyup.enter="addnewMsgDomRef">
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
-
-  <!-- <Modal/> -->
+  <!-- <RouterView /> -->
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
 .logo {
-  display: block;
-  margin: 0 auto 2rem;
+  height: 55px;
+  
+  width: auto;
+  padding: 3px 15px 5px 10px;
+}
+#loginUser{
+  color: blueviolet;
 }
 
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
+.user-link{
+  display: contents !important;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+nav .router-link-exact-active{
+  color: #fff !important;
+  font-weight: bold;
 }
 </style>
