@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import Login from '../views/Login.vue'
+import Admin from '../views/Admin.vue'
+import NoAccess from '../views/NoAccess.vue'
 import {useFhApiStore} from '../stores/FhApiStore'
 
 const router = createRouter({
@@ -19,6 +21,17 @@ const router = createRouter({
       component: Login
     },
     {
+      path: '/adminpage',
+      name: 'adminpage',
+      beforeEnter: isAdmin,
+      component: Admin
+    },
+    {
+      path: '/noaccess',
+      name: 'noaccess',
+      component: NoAccess
+    },
+    {
       path: '/about',
       name: 'about',
       beforeEnter: isLoggedInn,
@@ -33,17 +46,31 @@ const router = createRouter({
 
 export default router;
 
-async function isLoggedInn (to, from, next) {
+async function isLoggedInn(to, from, next) {
   const fhApiStore = useFhApiStore()
   await fhApiStore.login().then(res => {
-    if(res.user){
-      next();  
+    if (res.user) {
+      next();
     } else {
       next({
         name: 'login'
       })
     }
-    
   });
+}
+async function isAdmin(to, from, next) {
+  const fhApiStore = useFhApiStore()
+  await fhApiStore.login().then(res => {
+    if(!res.user) return next({name: 'login'})
+
+    if (res.user?.accessLevelId == 1) {
+      next();
+    } else {
+      next({
+        name: 'noaccess'
+      })
+    }
+  });
+
 
 }
