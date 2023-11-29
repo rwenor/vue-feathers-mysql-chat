@@ -85,7 +85,6 @@ const handleLogout = async () => {
     <footer>
       <!-- TODO Better footer -->
       <!-- <p class="foot">&copy; Copyright 2019 Axicon AS</p> -->
-     "fhApiStore" {{ fhApiStore }}
     </footer>
   </div>
 
