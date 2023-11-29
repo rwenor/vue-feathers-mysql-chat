@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import Login from '../views/Login.vue'
 import Admin from '../views/Admin.vue'
 import NoAccess from '../views/NoAccess.vue'
+import User from '../views/User.vue'
 import {useFhApiStore} from '../stores/FhApiStore'
 
 const router = createRouter({
@@ -30,6 +31,12 @@ const router = createRouter({
       path: '/noaccess',
       name: 'noaccess',
       component: NoAccess
+    },
+    {
+      path: '/userpage/:id', props: true,
+      name: 'userpage',
+      beforeEnter: isLoggedInn,
+      component: User
     },
     {
       path: '/about',
