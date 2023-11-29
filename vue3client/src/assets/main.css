@@ -1,1 +1,217 @@
-@import './all.css';
+/* FontAwesome v5.7 import  */
+@import './all.css'; 
+
+html {
+    font-family: Helvetica;
+  }
+  
+  body{
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  /******************************** HEADER *********************************/
+  
+  .logo {
+    height: 55px;
+    
+    width: auto;
+    padding: 3px 15px 5px 10px;
+  }
+  #loginUser{
+    color: blueviolet;
+  }
+  
+  .user-link{
+    display: contents !important;
+  }
+  
+  nav .router-link-exact-active{
+    color: #fff !important;
+    font-weight: bold;
+  }
+  
+  /******************************** Body *********************************/
+  
+  .title {
+    background: gray;
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+    text-align: left;
+   
+  }
+  
+  .addStyle {
+    display: inline;
+    font-size: 14px;
+    
+  }
+  
+  /******************************** Foot *********************************/
+  .foot {
+    border-top: 0.5px solid lightgrey;
+    padding: 5px 0px;
+    font-size: 11px;
+    font-weight: bold;
+    text-align: center;
+    bottom: 0;
+    /* position: fixed; */
+    width: 100%;
+    background: white;
+    margin: 0 auto;
+  }
+  
+  /******************************** ADD FORM *********************************/
+  .formControlWeekNr {
+    width: 100%;
+  } 
+  
+  .formControlSelect1{
+    width: 100%;
+    padding-left:10px;
+  }
+  .produksjonsOppgave{
+    width: 100%;
+    padding-left:10px;  
+  }
+  
+  .inputAnsvarlig{
+    width: 100%;
+    padding-left:10px;
+     
+  }
+  .addTitle {
+    text-align: center;
+    margin: 20px 0px;;
+    padding: 10px 0px; 
+  }
+  
+  .inputDate{
+    padding-left: 30px;
+    width: 100%;
+    cursor: pointer;
+   }
+  
+  button{
+    cursor: pointer;
+  }
+  
+  .fa-calendar-alt{
+    color: coral;
+    position: absolute;
+    top: 6px;
+    left: 12px;
+  }
+  
+  .addForm{
+    background:  rgb(241, 234, 234); 
+    border-radius: 10px;
+  }
+  
+  .addButton{
+    background: #242424 none repeat scroll 0 0;
+    border: 1px solid #4f5c04;
+    border-radius: 15px;
+    color: #fff;
+    font-size: 14px;
+    font-style: normal;
+    line-height: 30px;
+    margin: 0px 0;
+    padding: 0px 0px;
+    text-transform: uppercase;
+    width: 70%;
+    position: relative;
+    
+  }
+  
+  .addButton:hover {
+    background: coral none repeat scroll 0 0;
+    color: #fff;
+    transition: all 0.5s ease 0s;
+  }
+  
+  .inputOrdre{
+    width: 100%;
+    padding-left: 10px;
+  }
+  
+  
+  /******************************PRODUKSJONS LISTE ***********************************************/
+  .delerTitle {
+    text-align: center;
+    margin-top: 25px;
+    padding: 10px 0px;
+    background-color: lightcoral;
+    color: white;
+    width:96%; 
+    margin-left:2%; 
+    margin-right:2%
+  }
+  
+  #deleteBtn{
+    width: 90px;
+    margin: 0px 10px;
+    
+  }
+  #deleteBtn:hover{
+    background-color:coral;
+    color: white;
+  }
+  
+  
+  .table-responsive{
+    /* height:100vh;   */
+    overflow:scroll;
+  }
+   thead tr:nth-child(1) th{
+      position: sticky;
+      top: -2px;  
+      z-index: 100;
+    }
+  
+    .buttons-size {
+      width: 40px;
+    }
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    
+    #input-axnummer {
+      min-width: 170px;
+    }
+    .input-axnummer{
+      width: 100px;
+      text-align: center;
+      padding: .2rem .75rem !important;
+    }
+  
+    .form-modal {
+      margin: 15px;
+    }
+  
+    .alert-datk{
+      font-size: 14px;
+      padding: 5px 0;
+      text-align: center;
+      font-weight: bold;
+    } 
+  
+    td{
+      font-size: 15px;
+    }
+  
+    #input_number input[type=number]::-webkit-inner-spin-button ,
+      #input_number input[type="number"]::-webkit-outer-spin-button{
+      opacity: 1 !important;
+      -webkit-appearance:auto !important;
+    }
+  
+    #input_number input[type=number] {
+      width: 70px;
+      display: inline-block;
+      margin-right: 10px;
+    }
+  
+  
