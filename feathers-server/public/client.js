@@ -49,8 +49,8 @@ const loginTemplate = (error) => `<div class="login flex min-h-screen bg-neutral
         <label class="form-check-label" for="inlineRadio1">1 - Administrator</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" checked type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2">
-        <label class="form-check-label" for="inlineRadio2">2 - Normal bruker</label>
+        <input class="form-check-input" checked type="radio" name="inlineRadioOptions" id="inlineRadio2" value="5">
+        <label class="form-check-label" for="inlineRadio2">5 - Normal bruker</label>
       </div>
     </div>
     <div class="form-control mt-6"><button id="login" type="button" class="btn">Login</button></div>
