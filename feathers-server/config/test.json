@@ -1,6 +1,7 @@
 {
   "port": 8998,
   "mysql": {
+    "debug": true,
     "client": "mysql",
     "connection": "mysql://root:ax@localhost:3306/feathersdb"
   }
