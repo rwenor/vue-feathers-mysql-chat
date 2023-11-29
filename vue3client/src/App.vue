@@ -2,11 +2,13 @@
 import { ref, onMounted, watch } from 'vue'
 import {useFhApiStore} from './stores/FhApiStore'
 import router from './router/index.js'
+import { storeToRefs } from 'pinia';
 
-let fhApiStore = useFhApiStore();
+const fhApiStore = useFhApiStore();
+const { user } = storeToRefs(useFhApiStore());
 
 const handleLogout = async () => {
-  await fhApiStore.logout().then(() => router.push('./login')
+  await fhApiStore.logout().then(() => router.push('/login')
     )
 }
 
@@ -29,42 +31,42 @@ const handleLogout = async () => {
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <!-- Nav -->
           <div class="navbar-nav mx-lg-auto">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0" v-if="fhApiStore.user">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" v-if="user">
               <li class="nav-item">
                 <router-link class="nav-link" to="/">Mamut </router-link>
               </li>
               <li class="nav-item">
                 <router-link class="nav-link" to="/rackbeat">RackBeat </router-link>
               </li>
-              <li class="nav-item" v-if="fhApiStore.user.accessLevelId === 1">
+              <li class="nav-item" v-if="user.accessLevelId == 1">
                 <router-link class="nav-link" to="/deler/4">Delerplan</router-link>
               </li>
-              <li class="nav-item" v-if="fhApiStore.user.accessLevelId === 1">
+              <li class="nav-item" v-if="user.accessLevelId == 1">
                 <router-link class="nav-link" to="/deler/6">Produktoversikt</router-link>
               </li>
 
-              <li class="nav-item" v-if="fhApiStore.user.accessLevelId === 1">
+              <li class="nav-item" v-if="user.accessLevelId == 1">
                 <router-link class="nav-link" to="/gqlfilter">GqlFilter</router-link>
               </li>
 
               <li class="nav-item">
                 <router-link class="nav-link" to="/systemlist">System list</router-link>
               </li>
-              <li class="nav-item" v-if="fhApiStore.user.accessLevelId === 1">
+              <li class="nav-item" v-if="user.accessLevelId == 1">
                 <router-link class="nav-link" to="/adminpage">Admin</router-link>
               </li>
             </ul>
           </div>
           <!-- Right navigation -->
           <ul class="d-flex navbar-nav">
-            <li class="nav-item" v-if="fhApiStore.user">
+            <li class="nav-item" v-if="user">
               <!-- <SearchConfig /> -->
             </li>
             <div class="dropdown-divider mt-4 mb-3"></div>
-            <li id="loginUser" class="text-light px-3 py-2 nav-item" v-if="fhApiStore.user">
-              <router-link class="nav-link user-link" :to="`/userpage/${fhApiStore.user.id}`" title="Bruker detaljer">
-                <i class="far fa-user"></i>
-                {{fhApiStore.user.email }}
+            <li id="loginUser" class="text-light px-3 py-2 nav-item" v-if="user">
+              <router-link class="nav-link user-link" :to="`/userpage/${user.id}`" title="Bruker detaljer">
+                <i class="fas fa-user"></i>
+                   {{user.name }}
               </router-link>
 
               <a class="ms-2 link-danger" @click.prevent="handleLogout" href="#" title="Log ut">
@@ -85,6 +87,7 @@ const handleLogout = async () => {
     <footer>
       <!-- TODO Better footer -->
       <!-- <p class="foot">&copy; Copyright 2019 Axicon AS</p> -->
+     hgfgfg {{ user }}
     </footer>
   </div>
 
