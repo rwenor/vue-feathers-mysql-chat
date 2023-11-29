@@ -31,6 +31,10 @@ const loginTemplate = (error) => `<div class="login flex min-h-screen bg-neutral
       <input type="text" name="username" placeholder="enter name" class="input input-bordered">
     </div>
     <div class="form-control">
+      <label for="lastname" class="label"><span class="label-text">Last name</span></label>
+      <input type="text" name="lastname" placeholder="enter lastname" class="input input-bordered">
+    </div>
+    <div class="form-control">
       <label for="email" class="label"><span class="label-text">Email</span></label>
       <input type="text" name="email" placeholder="enter email" class="input input-bordered">
     </div>
@@ -183,6 +187,7 @@ const getCredentials = () => {
       email: document.querySelector('[name="email"]').value,
       password: document.querySelector('[name="password"]').value,
       name: document.querySelector('[name="username"]').value,
+      lastName: document.querySelector('[name="lastname"]').value,
       accessLevelId: Number(document.querySelector('[name="inlineRadioOptions"]:checked').value)
     }
     console.log(user)

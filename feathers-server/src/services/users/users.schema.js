@@ -11,6 +11,7 @@ export const userSchema = Type.Object(
     id: Type.Number(),
     email: Type.String(),
     name: Type.String(),
+    lastName: Type.String(),
     password: Type.Optional(Type.String()),
     githubId: Type.Optional(Type.Number()),
     accessLevelId: Type.Optional(Type.Number()),
@@ -29,7 +30,7 @@ export const userExternalResolver = resolve({
 // Schema for creating new users
 export const userDataSchema = Type.Pick(
   userSchema,
-  ['email', 'password', 'githubId', 'name', 'avatar' , 'accessLevelId'],
+  ['email', 'password', 'githubId', 'name', 'lastName', 'avatar' , 'accessLevelId'],
   {
     $id: 'UserData',
     additionalProperties: false
@@ -61,7 +62,7 @@ export const userPatchResolver = resolve({
 })
 
 // Schema for allowed query properties
-export const userQueryProperties = Type.Pick(userSchema, ['id', 'email', 'name', 'githubId', 'accessLevelId'])
+export const userQueryProperties = Type.Pick(userSchema, ['id', 'email', 'name', 'lastName', 'githubId', 'accessLevelId'])
 export const userQuerySchema = Type.Intersect(
   [
     querySyntax(userQueryProperties),

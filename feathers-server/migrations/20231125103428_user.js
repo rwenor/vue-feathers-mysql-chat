@@ -3,6 +3,7 @@ export async function up(knex) {
     table.increments('id')
     table.string('email').unique()
     table.string('name')
+    table.string('lastName')
     table.string('password')
     table.string('githubId')
     table.string('accessLevelId')
