@@ -5,7 +5,7 @@ export async function up(knex) {
 
   await knex.schema.alterTable('messages', (table) => {
     table.bigint('createdAt')
-    table.bigint('userId').references('id').inTable('users')
+    table.bigint('userId') // .unsigned().notNullable().references('id').inTable('users')
   })
 }
 
