@@ -67,8 +67,7 @@ const handleLogout = async () => {
                 {{fhApiStore.user.email }}
               </router-link>
 
-              <a class="ms-1 link-danger" @click.prevent="handleLogout" href="#" title="Log ut">
-                Logout
+              <a class="ms-2 link-danger" @click.prevent="handleLogout" href="#" title="Log ut">
                 <i class="fas fa-sign-out-alt fa-lg"></i>
               </a>
             </li>
