@@ -15,11 +15,11 @@ onMounted(async () => {
   if(res.user?.id) router.push('./')
 })
 
-const login = async () => {
+const submitLogin = async (email, password) => {
   error = "";
   loadingSpinner.value = true;
-
-  await fhApiStore.login(email.value, password.value)
+  
+  await fhApiStore.login(email, password)
     .then(res => {
       loadingSpinner.value = false;
       if (res.user?.id) {
@@ -37,7 +37,7 @@ const login = async () => {
 <template>
   <div id="login-body" class="text-center">
     <main class="form-signin mt-5">
-      <form  @submit.prevent="login()">
+      <form  @submit.prevent="submitLogin(email, password)">
         <img src="iconAxicon.png" id="icon" alt="Axicon logo">
         <h1 class="h3 my-3 fw-normal">Axicon</h1>
 
