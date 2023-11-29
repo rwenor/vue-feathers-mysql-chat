@@ -27,12 +27,27 @@ const loginTemplate = (error) => `<div class="login flex min-h-screen bg-neutral
         : ''
     }
     <div class="form-control">
+      <label for="username" class="label"><span class="label-text">Name</span></label>
+      <input type="text" name="username" placeholder="enter name" class="input input-bordered">
+    </div>
+    <div class="form-control">
       <label for="email" class="label"><span class="label-text">Email</span></label>
       <input type="text" name="email" placeholder="enter email" class="input input-bordered">
     </div>
     <div class="form-control mt-0">
       <label for="password" class="label"><span class="label-text">Password</span></label>
       <input type="password" name="password" placeholder="enter password" class="input input-bordered">
+    </div>
+    <div class="form-control">
+      <p>Bruker rettigheter</p>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1">
+        <label class="form-check-label" for="inlineRadio1">1 - Administrator</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" checked type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2">
+        <label class="form-check-label" for="inlineRadio2">2 - Normal bruker</label>
+      </div>
     </div>
     <div class="form-control mt-6"><button id="login" type="button" class="btn">Login</button></div>
     <div class="form-control mt-6"><button id="signup" type="button" class="btn">Signup</button></div>
@@ -166,8 +181,11 @@ const showLogin = () => {
 const getCredentials = () => {
     const user = {
       email: document.querySelector('[name="email"]').value,
-      password: document.querySelector('[name="password"]').value
+      password: document.querySelector('[name="password"]').value,
+      name: document.querySelector('[name="username"]').value,
+      accessLevelId: Number(document.querySelector('[name="inlineRadioOptions"]:checked').value)
     }
+    console.log(user)
   
     return user
   }
