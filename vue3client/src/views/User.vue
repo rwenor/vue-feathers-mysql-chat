@@ -1,6 +1,6 @@
 <script setup>
 import { useFhApiStore } from '../stores/FhApiStore';
-import { ref, computed  } from 'vue';
+import { ref, computed, onMounted  } from 'vue';
 
 const fhApiStore = useFhApiStore();
 
@@ -14,9 +14,7 @@ let inputEmail = ref(fhApiStore.user.email);
 let inputPassword = ref("");
 let inputNewPassword = ref("");
 let inputLastName = ref(fhApiStore.user.lastName);
-let selectUserRights = ref(
-	{id: fhApiStore.user.accessLevelId}
-	);
+let selectUserRights = ref(fhApiStore.user.accessLevelId);
 let selectUserOptions = ref([
 	{ id: 5, name: 'Normal bruker' },
 	{ id: 1, name: 'Administrator' },
@@ -27,12 +25,32 @@ const isUserAdmin = computed(() => {
 	return fhApiStore.user.accessLevelId == 1 ? true: false; 
 });
 
+const setSelectUserRight = (event) => {
+	selectUserRights.value = event.target.value;
+}
+
+const submitUser = async (inputName, inputLastName, inputEmail, inputPassword, inputNewPassword, selectUserRights) => {
+	if (isPasswordEqual(inputPassword, inputNewPassword)) {
+		updateUser(inputName, inputLastName, inputEmail, inputPassword, inputNewPassword, selectUserRights)
+	} else {
+		message.value = { ok: false, statusText: 'Passord er ikke like' };
+	}
+}
+
+const updateUser = async (inputName,inputLastName, inputEmail, inputPassword, inputNewPassword, selectUserRights) => {
+	console.log("updateUser" , inputName,inputLastName, inputEmail, inputPassword, inputNewPassword, selectUserRights)
+}
+
+const isPasswordEqual = (inputPassword, inputNewPassword) => {
+  return inputPassword === inputNewPassword ? true : false;
+}
+
 </script>
 
 <template>
 	<div class="container">
 		<!-- <AlertTestDatabase /> -->
-		<h2 class="fs-3 fw-bold mt-4 mb-4">Bruker detaljer {{ selectUserRights }}
+		<h2 class="fs-3 fw-bold mt-4 mb-4">Bruker detaljer
 			<!-- <Spinner :loadingSpinner="this.loadingSpinner" /> -->
 		</h2>
 
@@ -61,26 +79,13 @@ const isUserAdmin = computed(() => {
 			</div>
 			<div class="col-md-6">
 				<label for="rettigheter" class="form-label">Rettigheter</label>
-				<!-- <select :disabled="!isUserAdmin" v-model="selectUserRights.id" required class="form-select" aria-label="Rettigheter"
-					name="rettigheter">
-					<option v-for="(selectUserOption, index) in selectUserOptions" :value="selectUserOption" :key="index"
-						:v-if="selectUserOption.id ==  selectUserRights.id">
+				<select :disabled="!isUserAdmin" required class="form-select" aria-label="Rettigheter"
+					name="rettigheter" @change="setSelectUserRight($event)">
+					<option v-for="(selectUserOption, index) in selectUserOptions" :value="selectUserOption.id" :key="index"
+						:selected="selectUserOption.id == selectUserRights ">
 						{{ selectUserOption.id }} - {{ selectUserOption.name }}
 					</option>
-				</select> -->
-				
-				<div class="form-check">
-					<input class="form-check-input" :disabled="!isUserAdmin"  type="radio" name="exampleRadios" v-model="selectUserRights" id="exampleRadios1" value="1" :checked="fhApiStore.user.accessLevelId == selectUserRights.id">
-					<label class="form-check-label" for="exampleRadios1">
-						1 - Administrator
-					</label>
-				</div>
-				<div class="form-check">
-					<input class="form-check-input" :disabled="!isUserAdmin"  type="radio" name="exampleRadios" v-model="selectUserRights" id="exampleRadios2" value="5" :checked="fhApiStore.user.accessLevelId == selectUserRights.id">
-					<label class="form-check-label" for="exampleRadios2">
-						5 - Normal bruker
-					</label>
-				</div>
+				</select>
 			</div>
 
 			<div class="col-md-6">
