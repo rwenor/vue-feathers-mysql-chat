@@ -79,6 +79,18 @@ export const useFhApiStore = defineStore('FhApiStore', {
         console.error('UserCreate error:', err)
       }
     },
+    async updateUser(credentials){
+      // TODO UPDATING USERS
+      try{
+        console.log(credentials);
+
+        let b = await usersService.patch()
+      } catch(err){
+        console.log(err)
+      }
+      
+    },
+
     async getUsers () {
       try {
         //debugger
