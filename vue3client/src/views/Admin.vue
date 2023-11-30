@@ -1,32 +1,16 @@
-<script>
-// import UsersListTable from "@/components/tables/UsersListTable.vue";
+<script setup>
+import UsersListTable from "@/components/tables/UsersListTable.vue";
+import { ref } from "vue";
 // import NewUserForm from "@/components/tables/NewUserForm.vue";
 // import AlertTestDatabase from "@/utils/AlertTestDatabase.vue";
 
-export default {
-	name: "adminpage",
-	props: [],
-	components: {
-		// AlertTestDatabase,
-        // UsersListTable,
-		// NewUserForm
-	},
-	data() {
-		return {
-			trigger: false,
-		};
-	},
-	mounted() {
-	},
-	computed: {
-	},
-	methods: {
-		triggerTab(){
-			return this.trigger = !this.trigger;
-		}
-	},
-};
+let trigger = ref(false);
+
+const triggerTab = () =>{
+	return trigger.value = !trigger.value;
+}
 </script>
+
 <template>
 	<div class="container">
 		<!-- <AlertTestDatabase /> -->
@@ -47,8 +31,8 @@ export default {
 			</li>
 		</ul>
 	    <div class="tab-content mb-5" id="myTabContent">
-			<!-- <UsersListTable  :triggerProp="this.trigger" />
-			<NewUserForm /> -->
+			<UsersListTable  :triggerProp="trigger" />
+			<!-- <NewUserForm /> -->
 		</div>
 	</div>
 </template>
