@@ -82,7 +82,7 @@ export const useFhApiStore = defineStore('FhApiStore', {
     async updateUser(credentials){
       // TODO UPDATING USERS
       try{
-        console.log(credentials);
+        console.log("#TODO UPDATING USERS", credentials);
 
         let b = await usersService.patch()
       } catch(err){
@@ -91,12 +91,17 @@ export const useFhApiStore = defineStore('FhApiStore', {
       
     },
 
+    async deleteUser(credentials){
+      // TODO Delete user
+      console.log(" #TODO DELETE USER")
+    },
+
     async getUsers () {
       try {
         //debugger
         let users = await usersService.find()
         this.users = users.data
-        jLog(users, 'users:')
+        // jLog(users, 'users:')
       } catch (err) {
         cLog(err)
       }
