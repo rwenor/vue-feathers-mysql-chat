@@ -9,10 +9,11 @@ let userDetails = ref({});
 let accessToken = ref("");
 let loadingSpinner = ref(false);
 let message = ref({});
+let userId = ref(fhApiStore.user.id)
 let inputName = ref(fhApiStore.user.name);
 let inputEmail = ref(fhApiStore.user.email);
-let inputPassword = ref("");
-let inputNewPassword = ref("");
+let inputPassword = ref("fabioneto");
+let inputNewPassword = ref("fabioneto");
 let inputLastName = ref(fhApiStore.user.lastName);
 let selectUserRights = ref(fhApiStore.user.accessLevelId);
 let selectUserOptions = ref([
@@ -29,20 +30,30 @@ const setSelectUserRight = (event) => {
 	selectUserRights.value = event.target.value;
 }
 
-const submitUser = async (inputName, inputLastName, inputEmail, inputPassword, inputNewPassword, selectUserRights) => {
-	if (isPasswordEqual(inputPassword, inputNewPassword)) {
-		updateUser(inputName, inputLastName, inputEmail, inputPassword, inputNewPassword, selectUserRights)
+const submitUserForm = async (userId, inputName, inputLastName, inputEmail, inputPassword, inputNewPassword, selectUserRights) => {
+	let credentials = {
+		userId,
+		inputName, 
+		inputLastName, 
+		inputEmail, 
+		inputPassword, 
+		inputNewPassword, 
+		selectUserRights
+	}
+
+	if (isPasswordEqual(credentials)) {
+		updateUser(credentials)
 	} else {
 		message.value = { ok: false, statusText: 'Passord er ikke like' };
 	}
 }
 
-const updateUser = async (inputName,inputLastName, inputEmail, inputPassword, inputNewPassword, selectUserRights) => {
-	console.log("updateUser" , inputName,inputLastName, inputEmail, inputPassword, inputNewPassword, selectUserRights)
+const updateUser = async (credentials) => {
+	fhApiStore.updateUser(credentials);
 }
 
-const isPasswordEqual = (inputPassword, inputNewPassword) => {
-  return inputPassword === inputNewPassword ? true : false;
+const isPasswordEqual = (credentials) => {
+  return credentials.inputPassword === credentials.inputNewPassword ? true : false;
 }
 
 </script>
@@ -55,7 +66,7 @@ const isPasswordEqual = (inputPassword, inputNewPassword) => {
 		</h2>
 
 		<form autocomplete="off" class="row g-3"
-			@submit.prevent="submitUser(inputName, inputLastName, inputEmail, inputPassword, inputNewPassword, selectUserRights)">
+			@submit.prevent="submitUserForm(userId, inputName, inputLastName, inputEmail, inputPassword, inputNewPassword, selectUserRights)">
 			<div class="col-6">
 				<label for="inputName" class="form-label">Navn</label>
 				<input type="text" :disabled="!isUserAdmin" v-model="inputName" minLength="3" class="form-control" id="inputName"
