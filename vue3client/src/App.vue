@@ -32,7 +32,7 @@ const handleLogout = async () => {
           <!-- Nav -->
           <div class="navbar-nav mx-lg-auto">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0" v-if="user">
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <router-link class="nav-link" to="/">Mamut </router-link>
               </li>
               <li class="nav-item">
@@ -51,7 +51,7 @@ const handleLogout = async () => {
 
               <li class="nav-item">
                 <router-link class="nav-link" to="/systemlist">System list</router-link>
-              </li>
+              </li> -->
               <li class="nav-item" v-if="user.accessLevelId == 1">
                 <router-link class="nav-link" to="/adminpage">Admin</router-link>
               </li>
@@ -87,7 +87,6 @@ const handleLogout = async () => {
     <footer>
       <!-- TODO Better footer -->
       <!-- <p class="foot">&copy; Copyright 2019 Axicon AS</p> -->
-     hgfgfg {{ user }}
     </footer>
   </div>
 

@@ -1,19 +1,21 @@
 <script setup>
 import { useFhApiStore } from '../stores/FhApiStore';
-import { ref, computed, onMounted  } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import { useRoute } from 'vue-router'
 
 const fhApiStore = useFhApiStore();
+const route = useRoute()
+const id = route.params.id
+
 
 let error = ref('');
-let userDetails = ref({});
-let accessToken = ref("");
 let loadingSpinner = ref(false);
 let message = ref({});
 let userId = ref(fhApiStore.user.id)
 let inputName = ref(fhApiStore.user.name);
 let inputEmail = ref(fhApiStore.user.email);
-let inputPassword = ref("fabioneto");
-let inputNewPassword = ref("fabioneto");
+let inputPassword = ref('');
+let inputNewPassword = ref('');
 let inputLastName = ref(fhApiStore.user.lastName);
 let selectUserRights = ref(fhApiStore.user.accessLevelId);
 let selectUserOptions = ref([
@@ -21,6 +23,16 @@ let selectUserOptions = ref([
 	{ id: 1, name: 'Administrator' },
 ])
 
+// TODO need to fix it 
+onMounted(() => {
+	if(id != fhApiStore.user.id){
+		let user = fhApiStore.users.find(item => item.id == id); 
+		inputName.value = user.name;
+		inputLastName.value = user.lastName;
+		selectUserRights.value = user.accessLevelId;
+		inputEmail.value = user.email;
+	}
+})
 
 const isUserAdmin = computed(() => {
 	return fhApiStore.user.accessLevelId == 1 ? true: false; 
@@ -113,12 +125,12 @@ const isPasswordEqual = (credentials) => {
 			<div class="pt-3">
 				<div v-if="message.ok == true" class="alert alert-success alert-dismissible fade show" role="alert">
 					Passord oppdatert. {{ message.statusText }}
-					<button type="button" class="btn-close" @click="closeAlert" aria-label="Close"></button>
+					<button type="button" class="btn-close" @click="message={}" aria-label="Close"></button>
 				</div>
 
 				<div v-if="message.ok == false" class="alert alert-danger alert-dismissible fade show" role="alert">
 					Error: {{ message.statusText }}
-					<button type="button" class="btn-close" @click="closeAlert" aria-label="Close"></button>
+					<button type="button" class="btn-close" @click="message={}" aria-label="Close"></button>
 				</div>
 			</div>
 		</form>
