@@ -64,10 +64,10 @@ const handleLogout = async () => {
             </li>
             <div class="dropdown-divider mt-4 mb-3"></div>
             <li id="loginUser" class="text-light px-3 py-2 nav-item" v-if="user">
-              <router-link class="nav-link user-link" :to="`/userpage/${user.id}`" title="Bruker detaljer">
+              <a class="nav-link user-link" :href="`/userpage/${user.id}`" title="Bruker detaljer">
                 <i class="fas fa-user"></i>
                    {{user.name }}
-              </router-link>
+              </a>
 
               <a class="ms-2 link-danger" @click.prevent="handleLogout" href="#" title="Log ut">
                 <i class="fas fa-sign-out-alt fa-lg"></i>
