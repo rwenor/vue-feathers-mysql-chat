@@ -79,7 +79,8 @@ export const useFhApiStore = defineStore('FhApiStore', {
         console.error('UserCreate error:', err)
       }
     },
-    async updateUser(credentials){
+    async patchUser(credentials){
+      console.log(credentials)
       try{
         await usersService.patch(credentials.id, {...credentials})
       } catch(err){
@@ -88,16 +89,17 @@ export const useFhApiStore = defineStore('FhApiStore', {
     },
 
     async deleteUser(credentials){
-      // TODO Delete user
-      console.log(" #TODO DELETE USER")
+      try{
+        await usersService.remove(credentials.id)
+      } catch(err){
+        console.log(err)
+      }
     },
 
     async getUsers () {
       try {
-        //debugger
         let users = await usersService.find()
         this.users = users.data
-        // jLog(users, 'users:')
       } catch (err) {
         cLog(err)
       }

@@ -14,8 +14,10 @@ const getUsers = async () => {
   })
 }
 
-const deleteUser = async () => {
-  await fhApiStore.deleteUser()
+const deleteUser = async (user) => {
+  await fhApiStore.deleteUser(user).then(()=> {
+    getUsers();
+  })
 }
 
 onMounted(() =>{
@@ -35,6 +37,7 @@ onMounted(() =>{
         >
             <thead class="table-primary">
                 <tr>
+                    <th scope="col">Id</th>                    
                     <th scope="col">Navn</th>                    
                     <th scope="col">Etternavn</th>
                     <th scope="col">Epost</th>
@@ -45,6 +48,7 @@ onMounted(() =>{
             </thead>
             <tbody>
                 <tr v-for="(user, index) in allUsersList" :key="index">
+                    <td>{{ user.id }}</td>
                     <td>{{ user.name }}</td>
                     <td>{{ user.lastName }}</td>
                     <td>{{ user.email }}</td>

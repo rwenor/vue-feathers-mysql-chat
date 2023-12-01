@@ -1,38 +1,62 @@
 <script setup>
 import { useFhApiStore } from '../stores/FhApiStore';
-import { ref, computed, onMounted } from 'vue';
-import { useRoute } from 'vue-router'
+import { ref, computed, onMounted, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router'
+import Spinner from '../utils/Spinner.vue';
 
 const fhApiStore = useFhApiStore();
-const route = useRoute()
+const route = useRoute();
+const router = useRouter();
 const id = route.params.id
 
 
 let error = ref('');
 let loadingSpinner = ref(false);
 let message = ref({});
-let userId = ref(fhApiStore.user.id)
-let inputName = ref(fhApiStore.user.name);
-let inputEmail = ref(fhApiStore.user.email);
-let inputPassword = ref('');
-let inputNewPassword = ref('');
-let inputLastName = ref(fhApiStore.user.lastName);
-let selectUserRights = ref(fhApiStore.user.accessLevelId);
+let userId = ref('')
+let inputName = ref('');
+let inputEmail = ref('');
+let inputPassword = ref('axaxax');
+let inputNewPassword = ref('axaxax');
+let inputLastName = ref('');
+let selectUserRights = ref('5');
 let selectUserOptions = ref([
 	{ id: 5, name: 'Normal bruker' },
 	{ id: 1, name: 'Administrator' },
 ])
 
-// TODO need to fix it 
-onMounted(() => {
-	if(id != fhApiStore.user.id){
-		let user = fhApiStore.users.find(item => item.id == id); 
+onMounted(async () => {
+	// Deny to see others usersinfo using the adresselinje 
+  if(id != fhApiStore.user.id && fhApiStore.user.accessLevelId != 1 ) return router.push("/noaccess");
+  
+  await fhApiStore.getUsers()
+  
+  let user  = fhApiStore.users.find(item => item.id == id);
+  if (!user) return router.push("/error")
+
+
+	setUserDetailsForm();
+
+})
+
+
+const setUserDetailsForm = () => {
+	if(id == fhApiStore.user.id){
+		createUserRefs(fhApiStore.user);
+	} else if (id != fhApiStore.user.id){
+		let storedUser = fhApiStore.users.find(item => item.id == id); 
+		createUserRefs(storedUser);
+	}
+
+}
+
+const createUserRefs = (user) => {
+		userId.value = user.id
 		inputName.value = user.name;
 		inputLastName.value = user.lastName;
 		selectUserRights.value = user.accessLevelId;
 		inputEmail.value = user.email;
-	}
-})
+}
 
 const isUserAdmin = computed(() => {
 	return fhApiStore.user.accessLevelId == 1 ? true: false; 
@@ -44,28 +68,32 @@ const setSelectUserRight = (event) => {
 
 const submitUserForm = async (userId, inputName, inputLastName, inputEmail, inputPassword, inputNewPassword, selectUserRights) => {
 	let credentials = {
-		userId,
-		inputName, 
-		inputLastName, 
-		inputEmail, 
-		inputPassword, 
-		inputNewPassword, 
-		selectUserRights
+		id: Number(userId),
+		name: inputName, 
+		lastName: inputLastName, 
+		email: inputEmail, 
+		password: inputPassword,  
+		accessLevelId: Number(selectUserRights)
 	}
 
-	if (isPasswordEqual(credentials)) {
-		updateUser(credentials)
+	if (isPasswordEqual(inputPassword, inputNewPassword)) {
+		updateUser(credentials).then(()=> {
+		message.value = { ok: true, statusText: 'Bruker oppdatert' };
+		})
 	} else {
 		message.value = { ok: false, statusText: 'Passord er ikke like' };
 	}
 }
 
 const updateUser = async (credentials) => {
-	fhApiStore.updateUser(credentials);
+	loadingSpinner.value = true;
+	fhApiStore.patchUser(credentials).then(() => {
+		loadingSpinner.value = false;
+	});
 }
 
-const isPasswordEqual = (credentials) => {
-  return credentials.inputPassword === credentials.inputNewPassword ? true : false;
+const isPasswordEqual = (inputPassword, inputNewPassword) => {
+  return inputPassword === inputNewPassword ? true : false;
 }
 
 </script>
@@ -73,7 +101,7 @@ const isPasswordEqual = (credentials) => {
 <template>
 	<div class="container">
 		<!-- <AlertTestDatabase /> -->
-		<h2 class="fs-3 fw-bold mt-4 mb-4">Bruker detaljer
+		<h2 class="fs-3 fw-bold mt-4 mb-4">Bruker
 			<!-- <Spinner :loadingSpinner="this.loadingSpinner" /> -->
 		</h2>
 
@@ -119,12 +147,12 @@ const isPasswordEqual = (credentials) => {
 
 			<div class="col-12">
 				<button type="submit" class="mt-2 btn btn-success">Send
-					<!-- <Spinner :loadingSpinner="loadingSpinner" /> -->
+					<Spinner :loadingSpinner="loadingSpinner" />
 				</button>
 			</div>
 			<div class="pt-3">
 				<div v-if="message.ok == true" class="alert alert-success alert-dismissible fade show" role="alert">
-					Passord oppdatert. {{ message.statusText }}
+					{{ message.statusText }}
 					<button type="button" class="btn-close" @click="message={}" aria-label="Close"></button>
 				</div>
 
