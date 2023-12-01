@@ -32,7 +32,6 @@ const triggerTab = () =>{
 		</ul>
 	    <div class="tab-content mb-5" id="myTabContent">
 			<UsersListTable  :triggerProp="trigger" />
-			<!-- <NewUserForm /> -->
 		</div>
 	</div>
 </template>

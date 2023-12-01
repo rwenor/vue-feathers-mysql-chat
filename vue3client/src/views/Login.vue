@@ -3,6 +3,7 @@ import {useFhApiStore} from '../stores/FhApiStore'
 import { ref, onMounted } from 'vue'
 import Spinner from '../utils/Spinner.vue'
 import router from '../router/index.js'
+import User from './User.vue'
 
 const fhApiStore = useFhApiStore()
 let error = ref('');
@@ -48,7 +49,7 @@ const submitLogin = async (email, password) => {
         </div>
         <div class="form-floating mb-2">
           <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
-          required="required" v-model="password">
+           v-model="password">
           <label for="floatingPassword">Password</label>
         </div>
        
@@ -59,6 +60,7 @@ const submitLogin = async (email, password) => {
         <div class="alert alert-danger mt-2" v-if="error">{{error}}</div>
       </form>
     </main>
+    <user />
   </div>
 </template>
 

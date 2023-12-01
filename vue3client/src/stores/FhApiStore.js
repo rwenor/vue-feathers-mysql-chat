@@ -62,15 +62,9 @@ export const useFhApiStore = defineStore('FhApiStore', {
       await fhClient.logout();
     },
     
-    async createUser (email, password) {
+    async createUser (credentials) {
       try {
-        // Authenticate with the local email/password strategy
-        //debugger
-        let userCredentials  = {
-                                  email,
-                                  password
-                                }
-        let user = await usersService.create(userCredentials)                        
+        let user = await usersService.create(credentials)                        
         console.log('User created: ')
         console.log(JSON.stringify(user, null, 2))
 

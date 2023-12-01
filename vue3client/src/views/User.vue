@@ -27,12 +27,12 @@ let selectUserOptions = ref([
 
 onMounted(async () => {
 	// Deny to see others usersinfo using the adresselinje 
-  if(id != fhApiStore.user.id && fhApiStore.user.accessLevelId != 1 ) return router.push("/noaccess");
+  // if(id != fhApiStore.user.id && fhApiStore.user.accessLevelId != 1 ) return router.push("/noaccess");
   
   await fhApiStore.getUsers()
   
-  let user  = fhApiStore.users.find(item => item.id == id);
-  if (!user) return router.push("/error")
+  // let user  = fhApiStore.users.find(item => item.id == id);
+  // if (!user) return router.push("/error")
 
 
 	setUserDetailsForm();
@@ -59,7 +59,7 @@ const createUserRefs = (user) => {
 }
 
 const isUserAdmin = computed(() => {
-	return fhApiStore.user.accessLevelId == 1 ? true: false; 
+	return fhApiStore.user.accessLevelId != 1 ? true: false; 
 });
 
 const setSelectUserRight = (event) => {
@@ -96,6 +96,21 @@ const isPasswordEqual = (inputPassword, inputNewPassword) => {
   return inputPassword === inputNewPassword ? true : false;
 }
 
+const create = (userId, inputName, inputLastName, inputEmail, inputPassword, inputNewPassword, selectUserRights) => {
+  let credentials = {
+		// id: Number(userId),
+		name: inputName, 
+		lastName: inputLastName, 
+		email: inputEmail, 
+		password: inputPassword,  
+		accessLevelId: Number(selectUserRights)
+	}
+  fhApiStore.createUser(credentials).then(() => {
+		loadingSpinner.value = false;
+	});
+
+}
+
 </script>
 
 <template>
@@ -119,7 +134,7 @@ const isPasswordEqual = (inputPassword, inputNewPassword) => {
 			</div>
 			<div class="col-md-6">
 				<label for="inputEmail" class="form-label">Epost</label>
-				<input type="email" disabled v-model="inputEmail" class="form-control" id="inputEmail"
+				<input type="email"  v-model="inputEmail" class="form-control" id="inputEmail"
 					placeholder="eks.john@doe.com" />
 
 			</div>
@@ -147,6 +162,10 @@ const isPasswordEqual = (inputPassword, inputNewPassword) => {
 
 			<div class="col-12">
 				<button type="submit" class="mt-2 btn btn-success">Send
+					<Spinner :loadingSpinner="loadingSpinner" />
+				</button>
+
+        <button type="button" @click="create(userId, inputName, inputLastName, inputEmail, inputPassword, inputNewPassword, selectUserRights)" class="ms-2 mt-2 btn btn-primary">Create
 					<Spinner :loadingSpinner="loadingSpinner" />
 				</button>
 			</div>
