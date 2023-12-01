@@ -80,15 +80,11 @@ export const useFhApiStore = defineStore('FhApiStore', {
       }
     },
     async updateUser(credentials){
-      // TODO UPDATING USERS
       try{
-        console.log("#TODO UPDATING USERS", credentials);
-
-        let b = await usersService.patch()
+        await usersService.patch(credentials.id, {...credentials})
       } catch(err){
         console.log(err)
       }
-      
     },
 
     async deleteUser(credentials){
