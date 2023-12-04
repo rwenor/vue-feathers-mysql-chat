@@ -1,8 +1,9 @@
 <script setup>
 import { useFhApiStore } from '../stores/FhApiStore';
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router'
-import Spinner from '../utils/Spinner.vue';
+import Spinner from '../utils/SpinnerSmall.vue';
+
 import ErrorMessage from '../components/ErrorMessage.vue';
 
 const fhApiStore = useFhApiStore();
@@ -13,6 +14,7 @@ const id = route.params.id
 
 let errorMessage = ref({});
 let loadingSpinner = ref(false);
+let showPassword = ref(false);
 let userId = ref('')
 let inputName = ref('');
 let inputEmail = ref('');
@@ -67,6 +69,7 @@ const setSelectUserRight = (event) => {
 }
 
 const submitUserForm = async (userId, inputName, inputLastName, inputEmail, inputPassword, inputNewPassword, selectUserRights) => {
+  errorMessage.value = {};
   let credentials = {
     id: Number(userId),
     name: inputName,
@@ -75,6 +78,8 @@ const submitUserForm = async (userId, inputName, inputLastName, inputEmail, inpu
     password: inputPassword,
     accessLevelId: Number(selectUserRights)
   }
+  // Using this flag to show and hide password input.
+  if(showPassword.value == false) delete credentials.password;
 
   // Returning if passwords are not the samme
   if (!isPasswordEqual(inputPassword, inputNewPassword)) return errorMessage.value = { ok: false, statusText: 'Passord er ikke like' };
@@ -149,11 +154,6 @@ const createUser = (credentials) => {
 
       </div>
       <div class="col-md-6">
-        <label for="inputPassword" class="form-label text-success">Nytt passord</label>
-        <input autocomplete="new-password" type="password" minLength="6" required v-model="inputPassword"
-          class="form-control" id="inputPassword" />
-      </div>
-      <div class="col-md-6">
         <label for="rettigheter" class="form-label">Rettigheter</label>
         <select :disabled="!isUserAdmin" required class="form-select" aria-label="Rettigheter" name="rettigheter"
           @change="setSelectUserRight($event)">
@@ -164,7 +164,14 @@ const createUser = (credentials) => {
         </select>
       </div>
 
-      <div class="col-md-6">
+      <button @click="showPassword = !showPassword" type="button" class="btn btn-dark">Bytt passord</button>
+
+      <div class="col-md-6" v-if="showPassword">
+        <label for="inputPassword" class="form-label text-success">Nytt passord</label>
+        <input autocomplete="new-password" type="password" minLength="6" required v-model="inputPassword"
+          class="form-control" id="inputPassword" />
+      </div>
+      <div class="col-md-6"  v-if="showPassword">
         <label for="inputPassword" class="form-label">Gjenta passord</label>
         <input autocomplete="new-password" type="password" minLength="6" required v-model="inputNewPassword"
           class="form-control" id="inputNewPassword" />
