@@ -59,7 +59,7 @@ const createUserRefs = (user) => {
 }
 
 const isUserAdmin = computed(() => {
-	return fhApiStore.user.accessLevelId != 1 ? true: false; 
+	return fhApiStore.user.accessLevelId == 1 ? true: false; 
 });
 
 const setSelectUserRight = (event) => {
@@ -134,7 +134,7 @@ const create = (userId, inputName, inputLastName, inputEmail, inputPassword, inp
 			</div>
 			<div class="col-md-6">
 				<label for="inputEmail" class="form-label">Epost</label>
-				<input type="email"  v-model="inputEmail" class="form-control" id="inputEmail"
+				<input disabled type="email"  v-model="inputEmail" class="form-control" id="inputEmail"
 					placeholder="eks.john@doe.com" />
 
 			</div>

@@ -60,7 +60,6 @@ const submitLogin = async (email, password) => {
         <div class="alert alert-danger mt-2" v-if="error">{{error}}</div>
       </form>
     </main>
-    <user />
   </div>
 </template>
 
