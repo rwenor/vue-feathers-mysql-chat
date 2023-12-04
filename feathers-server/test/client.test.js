@@ -27,6 +27,8 @@ describe('application client tests', () => {
 
   it('creates and authenticates a user with email and password', async () => {
     const userData = {
+      name: 'someone',
+      lastName: 'example',
       email: 'someone@example.com',
       password: 'supersecret'
     }
