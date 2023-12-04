@@ -8,9 +8,9 @@ import {useCounterStore} from '../../stores/counter'
 import { provide } from 'vue'
 
 import { setActivePinia, createPinia } from 'pinia'
-setActivePinia(createPinia())
 
 function factory() {
+  setActivePinia(createPinia())
   const CounterStore = useCounterStore()
 
   return mount(HelloWorld, { 

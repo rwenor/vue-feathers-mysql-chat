@@ -2,6 +2,8 @@
 //import {useCounterStore} from '../stores/counter'
 import {inject} from 'vue'
 
+const cntStore = inject('CounterStore')
+
 defineProps({
   msg: {
     type: String,
@@ -9,7 +11,6 @@ defineProps({
   }
 })
 
-const cntStore = inject('CounterStore')
 // call the action as a method of the Store
 cntStore.randomizeCounter()
 
