@@ -66,10 +66,8 @@ export const useFhApiStore = defineStore('FhApiStore', {
       try {
         let user = await usersService.create(credentials)                        
         console.log('User created: ')
-        console.log(JSON.stringify(user, null, 2))
-
+        return user;
       } catch (err) {
-        // Show login page (potentially with `e.message`)
         console.error('UserCreate error:', err)
         return err.message;
       }
