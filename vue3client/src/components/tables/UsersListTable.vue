@@ -17,6 +17,8 @@ const getUsers = async () => {
 }
 
 const deleteUser = async (user) => {
+  if(!confirm(`Vil du slette brukeren ${user.email} ?`)) return;
+
   return await fhApiStore.deleteUser(user).then((res)=> {
    if(res.id){
     errorMessage = {ok: true , statusText: `Slettet: ${res.email}`}
