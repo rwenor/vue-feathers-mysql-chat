@@ -77,9 +77,10 @@ export const userQueryResolver = resolve({
   id: async (value, user, context) => {
     // We want to be able to get a list of all users but
     // only let a user modify their own data otherwise
-    if (context.params.user && context.method !== 'find') {
-      return context.params.user.id
-    }
+    // TODO dette stopper bruker til å oppdatere andres brukers data
+    // if (context.params.user?.accessLevelId == 1 && context.method !== 'find') {
+    //   return context.params.user.id
+    // }
 
     return value
   }
