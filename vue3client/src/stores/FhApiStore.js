@@ -66,27 +66,29 @@ export const useFhApiStore = defineStore('FhApiStore', {
       try {
         let user = await usersService.create(credentials)                        
         console.log('User created: ')
-        console.log(JSON.stringify(user, null, 2))
-
+        return user;
       } catch (err) {
-        // Show login page (potentially with `e.message`)
         console.error('UserCreate error:', err)
+        return err.message;
       }
     },
     async patchUser(credentials){
       console.log(credentials)
       try{
-        await usersService.patch(credentials.id, {...credentials})
+        let res = await usersService.patch(credentials.id, {...credentials})
+        return res;
       } catch(err){
-        console.log(err)
+        console.log(err);
+        return err.message;
       }
     },
 
     async deleteUser(credentials){
       try{
-        await usersService.remove(credentials.id)
+        return await usersService.remove(credentials.id)
       } catch(err){
         console.log(err)
+        return err.message
       }
     },
 

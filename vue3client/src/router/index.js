@@ -4,6 +4,7 @@ import Login from '../views/Login.vue'
 import Admin from '../views/Admin.vue'
 import NoAccess from '../views/NoAccess.vue'
 import User from '../views/User.vue'
+import Error from '../views/Error.vue'
 import {useFhApiStore} from '../stores/FhApiStore'
 
 const router = createRouter({
@@ -31,6 +32,11 @@ const router = createRouter({
       path: '/noaccess',
       name: 'noaccess',
       component: NoAccess
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'error',
+      component: Error
     },
     {
       path: '/userpage/:id', props: true,

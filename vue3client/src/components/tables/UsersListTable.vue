@@ -3,10 +3,12 @@
 import { onMounted, ref } from 'vue';
 import {useFhApiStore} from '../../stores/FhApiStore'
 import {setTableConfiguration} from "../../utils/dataTablesConfig.js" ;
+import ErrorMessage from '../ErrorMessage.vue';
 
 const fhApiStore = useFhApiStore();
 
 let allUsersList = ref([]);
+let errorMessage = ref({});
 
 const getUsers = async () => {
   await fhApiStore.getUsers().then(() => {
@@ -15,7 +17,14 @@ const getUsers = async () => {
 }
 
 const deleteUser = async (user) => {
-  await fhApiStore.deleteUser(user).then(()=> {
+  if(!confirm(`Vil du slette brukeren ${user.email} ?`)) return;
+
+  return await fhApiStore.deleteUser(user).then((res)=> {
+   if(res.id){
+    errorMessage = {ok: true , statusText: `Slettet: ${res.email}`}
+   }else{
+    errorMessage = {ok: false , statusText: res}
+   }
     getUsers();
   })
 }
@@ -68,5 +77,6 @@ onMounted(() =>{
             </tbody>
         </table>
     </div>
+    <ErrorMessage :message="errorMessage"/>
   </div>
 </template>

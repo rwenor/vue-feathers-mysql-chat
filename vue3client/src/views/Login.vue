@@ -1,7 +1,7 @@
 <script setup>
 import {useFhApiStore} from '../stores/FhApiStore'
 import { ref, onMounted } from 'vue'
-import Spinner from '../utils/Spinner.vue'
+import Spinner from '../utils/SpinnerSmall.vue'
 import router from '../router/index.js'
 import User from './User.vue'
 
@@ -60,7 +60,6 @@ const submitLogin = async (email, password) => {
         <div class="alert alert-danger mt-2" v-if="error">{{error}}</div>
       </form>
     </main>
-    <user />
   </div>
 </template>
 
