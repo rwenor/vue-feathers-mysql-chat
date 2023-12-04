@@ -1,5 +1,8 @@
 <script setup>
-import {useCounterStore} from '../stores/counter'
+import { inject } from 'vue' 
+
+//import {useCounterStore} from '../stores/counter'
+const cntStore = inject('cntStore')
 
 defineProps({
   msg: {
@@ -8,7 +11,7 @@ defineProps({
   }
 })
 
-const cntStore = useCounterStore()
+
 // call the action as a method of the Store
 cntStore.randomizeCounter()
 
@@ -18,7 +21,7 @@ cntStore.randomizeCounter()
   <div class="greetings">
     <h1 class="green">{{ msg }}</h1>
     <h3>
-      You’ve successfully created a project with XYZ {{cntStore.count}}
+      You’ve successfully created a project with X1 {{cntStore.count}}
       <br>
       <button @click="cntStore.randomizeCounter()">Randomize</button>
       

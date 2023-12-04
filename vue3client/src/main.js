@@ -9,6 +9,11 @@ import router from './router'
 const app = createApp(App)
 
 app.use(createPinia())
+
+import {useCounterStore} from './stores/counter'
+const cntStore = useCounterStore()
+app.provide('cntStore', cntStore)
+
 app.use(router)
 
 app.mount('#app')
