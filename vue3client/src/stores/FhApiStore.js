@@ -87,9 +87,10 @@ export const useFhApiStore = defineStore('FhApiStore', {
 
     async deleteUser(credentials){
       try{
-        await usersService.remove(credentials.id)
+        return await usersService.remove(credentials.id)
       } catch(err){
         console.log(err)
+        return err.message
       }
     },
 
