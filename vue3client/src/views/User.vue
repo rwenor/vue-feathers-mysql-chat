@@ -67,28 +67,33 @@ const setSelectUserRight = (event) => {
 }
 
 const submitUserForm = async (userId, inputName, inputLastName, inputEmail, inputPassword, inputNewPassword, selectUserRights) => {
-	let credentials = {
-		id: Number(userId),
-		name: inputName, 
-		lastName: inputLastName, 
-		email: inputEmail, 
-		password: inputPassword,  
-		accessLevelId: Number(selectUserRights)
-	}
+  let credentials = {
+    id: Number(userId),
+    name: inputName,
+    lastName: inputLastName,
+    email: inputEmail,
+    password: inputPassword,
+    accessLevelId: Number(selectUserRights)
+  }
 
-	if (isPasswordEqual(inputPassword, inputNewPassword)) {
-		updateUser(credentials).then(()=> {
-		message.value = { ok: true, statusText: 'Bruker oppdatert' };
-		})
-	} else {
-		message.value = { ok: false, statusText: 'Passord er ikke like' };
-	}
+// Returning if passwords are not the samme
+  if (!isPasswordEqual(inputPassword, inputNewPassword)) return message.value = { ok: false, statusText: 'Passord er ikke like' };
+
+// Updating user and displaying right info
+  updateUser(credentials).then(res => {
+    if (res.id) {
+      message.value = { ok: true, statusText: "Oppdatert" };
+    } else {
+      message.value = { ok: false, statusText: res };
+    }
+  })
 }
 
 const updateUser = async (credentials) => {
 	loadingSpinner.value = true;
-	fhApiStore.patchUser(credentials).then(() => {
+	return fhApiStore.patchUser(credentials).then((res) => {
 		loadingSpinner.value = false;
+    return res;
 	});
 }
 

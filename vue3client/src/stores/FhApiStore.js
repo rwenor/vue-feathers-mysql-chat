@@ -71,14 +71,17 @@ export const useFhApiStore = defineStore('FhApiStore', {
       } catch (err) {
         // Show login page (potentially with `e.message`)
         console.error('UserCreate error:', err)
+        return err.message;
       }
     },
     async patchUser(credentials){
       console.log(credentials)
       try{
-        await usersService.patch(credentials.id, {...credentials})
+        let res = await usersService.patch(credentials.id, {...credentials})
+        return res;
       } catch(err){
-        console.log(err)
+        console.log(err);
+        return err.message;
       }
     },
 
