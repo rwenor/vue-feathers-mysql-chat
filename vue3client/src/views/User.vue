@@ -14,7 +14,7 @@ const id = route.params.id
 
 let errorMessage = ref({});
 let loadingSpinner = ref(false);
-let showPassword = ref(false);
+let showPassword = ref(true);
 let userId = ref('')
 let inputName = ref('');
 let inputEmail = ref('');
@@ -136,7 +136,7 @@ const showHidePassword = () => {
 <template>
   <div class="container">
     <!-- <AlertTestDatabase /> -->
-    <h2 class="fs-3 fw-bold mt-4 mb-4">Bruker
+    <h2 class="fs-3 fw-bold mt-4 mb-4">{{id == 100 ? 'Opprett bruker' : 'Bruker detaljer' }}
       <!-- <Spinner :loadingSpinner="this.loadingSpinner" /> -->
     </h2>
 
@@ -169,7 +169,7 @@ const showHidePassword = () => {
         </select>
       </div>
 
-      <button @click="showHidePassword()" type="button" class="btn btn-dark">Bytt passord</button>
+      <button v-if="id != 100" @click="showHidePassword()" type="button" class="btn btn-dark">Bytt passord</button>
 
       <div class="col-md-6" v-if="showPassword">
         <label for="inputPassword" class="form-label text-success">Nytt passord</label>
