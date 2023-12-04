@@ -34,10 +34,11 @@ onMounted(async () => {
   await fhApiStore.getUsers()
 
   let user = fhApiStore.users.find(item => item.id == id);
-  if (!user && id !== "nybruker") return router.push("/error")
+  if (!user && id != 100) return router.push("/error")
 
 
   setUserDetailsForm();
+  showHidePassword();
 
 })
 
@@ -45,7 +46,7 @@ onMounted(async () => {
 const setUserDetailsForm = () => {
   if (id == fhApiStore.user.id) {
     createUserRefs(fhApiStore.user);
-  } else if (id != fhApiStore.user.id) {
+  } else if (id != fhApiStore.user.id && id != 100) {
     let storedUser = fhApiStore.users.find(item => item.id == id);
     createUserRefs(storedUser);
   }
@@ -84,7 +85,7 @@ const submitUserForm = async (userId, inputName, inputLastName, inputEmail, inpu
   // Returning if passwords are not the samme
   if (!isPasswordEqual(inputPassword, inputNewPassword)) return errorMessage.value = { ok: false, statusText: 'Passord er ikke like' };
 
-  if (id === "nybruker") { // Using nybruker params as flag
+  if (id == 100) { // Using 100 as params as flag
     return createUser(credentials).then(res => {
       if (res.email) {
         errorMessage.value = { ok: true, statusText: `Opprettet: ${res.email}` };
@@ -123,7 +124,11 @@ const createUser = (credentials) => {
     loadingSpinner.value = false;
     return res;
   });
+}
 
+const showHidePassword = () => {
+  if(id == 100) return showPassword.value = true;
+  showPassword.value = !showPassword.value;
 }
 
 </script>
@@ -149,7 +154,7 @@ const createUser = (credentials) => {
       </div>
       <div class="col-md-6">
         <label for="inputEmail" class="form-label">Epost</label>
-        <input :disabled="id !== 'nybruker'"  type="email" v-model="inputEmail" class="form-control" id="inputEmail"
+        <input :disabled="id != 100"  type="email" v-model="inputEmail" class="form-control" id="inputEmail"
           placeholder="eks.john@doe.com" />
 
       </div>
@@ -164,7 +169,7 @@ const createUser = (credentials) => {
         </select>
       </div>
 
-      <button @click="showPassword = !showPassword" type="button" class="btn btn-dark">Bytt passord</button>
+      <button @click="showHidePassword()" type="button" class="btn btn-dark">Bytt passord</button>
 
       <div class="col-md-6" v-if="showPassword">
         <label for="inputPassword" class="form-label text-success">Nytt passord</label>
@@ -178,11 +183,11 @@ const createUser = (credentials) => {
       </div>
 
       <div class="col-12">
-        <button v-if="id !== 'nybruker'" type="submit" class="mt-2 btn btn-success">Send
+        <button v-if="id != 100" type="submit" class="mt-2 btn btn-success">Send
           <Spinner :loadingSpinner="loadingSpinner" />
         </button>
 
-        <button v-if="id == 'nybruker'" type="submit" class="ms-2 mt-2 btn btn-primary">Opprett
+        <button v-if="id == 100" type="submit" class="ms-2 mt-2 btn btn-primary">Opprett
           <Spinner :loadingSpinner="loadingSpinner" />
         </button>
       </div>

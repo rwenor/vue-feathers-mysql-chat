@@ -15,7 +15,7 @@ const triggerTab = () => {
   <div class="container">
     <!-- <AlertTestDatabase /> -->
     <router-link class="btn btn-success float-end" title="Lag en ny bruker"
-      :to= "`/userpage/nybruker`">
+      :to= "`/userpage/100`">
       <i class="fas fa-plus-circle"></i>
       Ny bruker
     </router-link>
