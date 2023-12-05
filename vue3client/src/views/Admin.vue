@@ -15,9 +15,9 @@ const triggerTab = () => {
   <div class="container">
     <!-- <AlertTestDatabase /> -->
     <router-link class="btn btn-success float-end" title="Lag en ny bruker"
-      :to= "`/userpage/100`">
+      :to= "`/userpage/nybruker`">
       <i class="fas fa-plus-circle"></i>
-      Ny bruker
+      Opprett bruker
     </router-link>
     <h2 class="fs-3 fw-bold mt-4 mb-4">Administrasjon</h2>
     <ul class="nav nav-tabs mt-5 mb-3" id="myTab" role="tablist">

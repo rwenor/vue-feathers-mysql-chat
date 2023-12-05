@@ -34,7 +34,7 @@ onMounted(async () => {
   await fhApiStore.getUsers()
 
   let user = fhApiStore.users.find(item => item.id == id);
-  if (!user && id != 100) return router.push("/error")
+  if (!user && id != 'nybruker') return router.push("/error")
 
 
   setUserDetailsForm();
@@ -46,7 +46,7 @@ onMounted(async () => {
 const setUserDetailsForm = () => {
   if (id == fhApiStore.user.id) {
     createUserRefs(fhApiStore.user);
-  } else if (id != fhApiStore.user.id && id != 100) {
+  } else if (id != fhApiStore.user.id && id != 'nybruker') {
     let storedUser = fhApiStore.users.find(item => item.id == id);
     createUserRefs(storedUser);
   }
@@ -85,7 +85,7 @@ const submitUserForm = async (userId, inputName, inputLastName, inputEmail, inpu
   // Returning if passwords are not the samme
   if (!isPasswordEqual(inputPassword, inputNewPassword)) return errorMessage.value = { ok: false, statusText: 'Passord er ikke like' };
 
-  if (id == 100) { // Using 100 as params as flag
+  if (id == 'nybruker') { // Using 'nybruker' as params as flag
     return createUser(credentials).then(res => {
       if (res.email) {
         errorMessage.value = { ok: true, statusText: `Opprettet: ${res.email}` };
@@ -127,7 +127,7 @@ const createUser = (credentials) => {
 }
 
 const showHidePassword = () => {
-  if(id == 100) return showPassword.value = true;
+  if(id == 'nybruker') return showPassword.value = true;
   showPassword.value = !showPassword.value;
 }
 
@@ -136,7 +136,7 @@ const showHidePassword = () => {
 <template>
   <div class="container">
     <!-- <AlertTestDatabase /> -->
-    <h2 class="fs-3 fw-bold mt-4 mb-4">{{id == 100 ? 'Opprett bruker' : 'Bruker detaljer' }}
+    <h2 class="fs-3 fw-bold mt-4 mb-4">{{id == 'nybruker' ? 'Opprett bruker' : 'Bruker detaljer' }}
       <!-- <Spinner :loadingSpinner="this.loadingSpinner" /> -->
     </h2>
 
@@ -154,7 +154,7 @@ const showHidePassword = () => {
       </div>
       <div class="col-md-6">
         <label for="inputEmail" class="form-label">Epost</label>
-        <input :disabled="id != 100"  type="email" v-model="inputEmail" class="form-control" id="inputEmail"
+        <input :disabled="id != 'nybruker'"  type="email" v-model="inputEmail" class="form-control" id="inputEmail"
           placeholder="eks.john@doe.com" />
 
       </div>
@@ -169,7 +169,7 @@ const showHidePassword = () => {
         </select>
       </div>
 
-      <button v-if="id != 100" @click="showHidePassword()" type="button" class="btn btn-dark">Bytt passord</button>
+      <button v-if="id != 'nybruker'" @click="showHidePassword()" type="button" class="btn btn-dark">Bytt passord</button>
 
       <div class="col-md-6" v-if="showPassword">
         <label for="inputPassword" class="form-label text-success">Nytt passord</label>
@@ -183,11 +183,11 @@ const showHidePassword = () => {
       </div>
 
       <div class="col-12">
-        <button v-if="id != 100" type="submit" class="mt-2 btn btn-success">Send
+        <button v-if="id != 'nybruker'" type="submit" class="mt-2 btn btn-success">Send
           <Spinner :loadingSpinner="loadingSpinner" />
         </button>
 
-        <button v-if="id == 100" type="submit" class="ms-2 mt-2 btn btn-primary">Opprett
+        <button v-if="id == 'nybruker'" type="submit" class="ms-2 mt-2 btn btn-primary">Opprett
           <Spinner :loadingSpinner="loadingSpinner" />
         </button>
       </div>
