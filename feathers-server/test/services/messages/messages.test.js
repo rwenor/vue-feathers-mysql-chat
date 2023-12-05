@@ -11,7 +11,9 @@ describe('messages service', () => {
 
   it('can create a new message for a user', async () => {
     const user = await app.service('users').create({
-      email: 'test@feathersjs.com',
+      name: 'test',
+      lastName: 'example',
+      email: 'test@example.com',
       password: 'supersecret'
     })
 

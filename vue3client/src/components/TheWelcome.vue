@@ -1,11 +1,15 @@
 <script setup>
+  import {inject} from 'vue'
   import MessageElement from './MessageElement.vue'
 
   import {useFhApiStore} from '../stores/FhApiStore'
   let fhApiStore = useFhApiStore()
 
-  import {useCounterStore} from '../stores/counter'
-  const cntStore = useCounterStore()
+  // import {useCounterStore} from '../stores/counter'
+  // const cntStore = useCounterStore()
+
+  const cntStore = inject('CounterStore')
+
 </script>
 
 <template>

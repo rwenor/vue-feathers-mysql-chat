@@ -8,9 +8,13 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
+import {useCounterStore} from './stores/counter'
+
 const app = createApp(App)
 
 app.use(createPinia())
+app.provide('CounterStore', useCounterStore())
+
 app.use(router)
 
 app.mount('#app')
