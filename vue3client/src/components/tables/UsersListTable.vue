@@ -61,7 +61,7 @@ onMounted(() =>{
                     <td>{{ user.name }}</td>
                     <td>{{ user.lastName }}</td>
                     <td>{{ user.email }}</td>
-                    <td>{{ user.accessLevelId}}</td>
+                    <td>{{ user.accessLevelId == 1 ? "Administrator" : "Normal bruker"}}</td>
                     <td class="text-end">
                         <router-link  title="Rediger" class="btn btn-sm btn-success" :to= "`/userpage/${user.id}`"> 
                           <i class="fas fa-pen fa-xs"></i>
